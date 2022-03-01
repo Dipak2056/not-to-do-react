@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 
 const initialState = { task: "", hr: "" };
-export const Form = ({ addNewTask }) => {
+const weeklyHours = 168;
+
+export const Form = ({ addNewTask, total }) => {
   const [newTask, setNewTask] = useState(initialState);
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    if (newTask.hr < 1) {
+      return alert("please enter a positive hours number");
+    }
+    if (total + newTask.hr > weeklyHours) {
+      return alert("more than weekly limit");
+    }
+
     addNewTask(newTask);
     setNewTask(initialState);
   };
@@ -25,12 +34,7 @@ export const Form = ({ addNewTask }) => {
               className="row row-cols-lg-auto d-flex justify-content-center g-3 align-items-center py-5"
             >
               <div className="col-12">
-                <label
-                  className="visually-hidden"
-                  for="inlineFormInputGroupUsername"
-                >
-                  Your-task
-                </label>
+                <label className="visually-hidden">Your-task</label>
                 <div className="input-group">
                   <input
                     type="text"
@@ -45,12 +49,7 @@ export const Form = ({ addNewTask }) => {
                 </div>
               </div>
               <div className="col-12">
-                <label
-                  className="visually-hidden"
-                  for="inlineFormInputGroupUsername"
-                >
-                  Hours
-                </label>
+                <label className="visually-hidden">Hours</label>
                 <div className="input-group">
                   <input
                     type="number"

@@ -41,14 +41,15 @@ function App() {
   };
   const ttlBadHours = badList.reduce((acc, curr) => acc + curr.hr, 0);
   const ttlTaskHours = taskList.reduce((acc, curr) => acc + curr.hr, 0);
+  const total = ttlBadHours + ttlTaskHours;
 
   return (
     <>
-      <div class="wrapper">
-        <div class="container">
+      <div className="wrapper">
+        <div className="container">
           <Title />
-          <Form addNewTask={addNewTask} />
-          <div class="row">
+          <Form addNewTask={addNewTask} total={total} />
+          <div className="row">
             <TaskList
               taskList={taskList}
               handleOnDeleteTaskList={handleOnDeleteTaskList}
@@ -61,7 +62,7 @@ function App() {
               ttlBadHours={ttlBadHours}
             />
           </div>
-          <TotalHours total={ttlBadHours + ttlTaskHours} />
+          <TotalHours total={total} />
         </div>
       </div>
     </>

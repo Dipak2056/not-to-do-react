@@ -16,26 +16,26 @@ export const BadList = ({
             <tbody id="bad-list">
               {badList.map((item, i) => {
                 return (
-                  <tr>
+                  <tr key={i}>
                     <td>
                       <input type="checkbox" />
                       {item.task}
                     </td>
                     <td>{item.hr} hr</td>
-                    <td class="text-end">
-                      <div class="btn btn-danger" title="Delete">
+                    <td className="text-end">
+                      <div className="btn btn-danger" title="Delete">
                         <i
-                          class="fa-solid fa-trash-can"
+                          className="fa-solid fa-trash-can"
                           title="Delete"
                           onClick={() => handleOnDeleteBadList(i)}
                         ></i>
                       </div>
                       <div
-                        class="btn btn-warning "
+                        className="btn btn-warning "
                         title="Mark"
                         onClick={() => markAsTask(i)}
                       >
-                        <i class="fa-solid fa-circle-chevron-left"></i>
+                        <i className="fa-solid fa-circle-chevron-left"></i>
                       </div>
                     </td>
                   </tr>
