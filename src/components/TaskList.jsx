@@ -1,7 +1,6 @@
 import React from 'react'
 
-export const TaskList = ( {taskList} ) => {
-  console.log(taskList);
+export const TaskList = ( {taskList, handleOnDeleteTaskList,markAsNotToDo} ) => {
   return (
     <div>
          <div className="col-md-6 mb-5">
@@ -15,17 +14,17 @@ export const TaskList = ( {taskList} ) => {
                           taskList.map((item,i) => {
                             return <tr>
                             <td>
-                                <input type="checkbox" />
+                                <input  type="checkbox" />
                                 {item.task}
                             </td>
                             <td> 
                             {item.hr} hr
                             </td>
                             <td class="text-end">
-                                            <div class="btn btn-danger" title="Delete" onclick="deleteItem(${i})">
+                                            <div class="btn btn-danger" title="Delete" onClick={()=>handleOnDeleteTaskList(i)}>
                                                 <i class="fa-solid fa-trash-can" title="Delete"></i>
                                             </div>
-                                            <div class="btn btn-warning " title="Mark" onclick="markAsNotToDo(${i})">
+                                            <div class="btn btn-warning " title="Mark" onClick={()=> markAsNotToDo(i)}>
                                             <i class="fa-solid fa-circle-chevron-right"></i>
                                             </div>
                             </td>

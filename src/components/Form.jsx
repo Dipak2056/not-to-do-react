@@ -3,26 +3,19 @@ import React, {useState} from 'react'
 const initialState = {task:'',hr:""};
 export const Form = ( {addNewTask} ) => {
 const [newTask, setNewTask] = useState(initialState);
-
-
-
 const handleOnSubmit = (e) => {
   e.preventDefault();
   addNewTask(newTask);
  setNewTask(initialState);
-
 }
-
-  const handleOnChange =(e) =>{
+const handleOnChange =(e) =>{
     const {value,name} = e.target;
     setNewTask( {
       ...newTask,
       [name]: name ==='hr' ? +value : value,
     })
-  
   };
-
-  return (
+ return (
     <div>
          <div className="row">
             <div className="col">
