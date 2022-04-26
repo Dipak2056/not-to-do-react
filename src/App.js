@@ -5,12 +5,15 @@ import { Form } from "./components/Form";
 import { TaskList } from "./components/TaskList";
 import { Title } from "./components/Title";
 import { TotalHours } from "./components/TotalHours";
+import { postTask } from "./helper/axiosHelper";
 
 function App() {
   const [taskList, setTaskList] = useState([]);
   const [badList, setBadList] = useState([]);
 
-  const addNewTask = (task) => {
+  const addNewTask = async (task) => {
+    const result = await postTask();
+    console.log(result);
     setTaskList([...taskList, task]);
   };
   // Delete the task item from task list
