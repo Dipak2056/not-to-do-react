@@ -1,16 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BadList } from "./components/BadList";
 import { Form } from "./components/Form";
 import { TaskList } from "./components/TaskList";
 import { Title } from "./components/Title";
 import { TotalHours } from "./components/TotalHours";
-import { postTask } from "./helper/axiosHelper";
+import { fetchTasks, postTask } from "./helper/axiosHelper";
 
 function App() {
   const [taskList, setTaskList] = useState([]);
   const [badList, setBadList] = useState([]);
   const [isPending, setIsPending] = useState(false);
+
+  useEffect(() => {
+    const getTask = async () => {
+      setIsPending(true);
+
+      const result = await fetchTasks();
+      setIsPending(false);
+
+      console.log(result);
+    };
+    getTask();
+  }, []);
 
   const addNewTask = async (task) => {
     setIsPending(true);

@@ -1,7 +1,11 @@
 const rootUrl = "http://localhost:8000/api/v1";
 const taskApi = `${rootUrl}/task`;
 //fetch  all tasks
-export const fetchTasks = (data) => {};
+export const fetchTasks = (data) => {
+  return fetch(taskApi)
+    .then((res) => res.json())
+    .then((data) => data);
+};
 
 //fetch a task
 //post new task
