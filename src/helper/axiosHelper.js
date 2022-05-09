@@ -5,18 +5,20 @@ export const fetchTasks = (data) => {};
 
 //fetch a task
 //post new task
-export const postTask = (data) => {
-  fetch(taskApi, {
-    method: "POST",
-    header: { "content-Type": "application/json" },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
-      console.log("error:", error);
+export const postTask = async (data) => {
+  try {
+    const res = await fetch(taskApi, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     });
+    const dd = await res.json();
+
+    return dd;
+  } catch (error) {
+    console.log("error:", error.message);
+  }
 };
 //delete task

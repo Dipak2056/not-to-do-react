@@ -10,11 +10,14 @@ import { postTask } from "./helper/axiosHelper";
 function App() {
   const [taskList, setTaskList] = useState([]);
   const [badList, setBadList] = useState([]);
+  const [isPending, setIsPending] = useState(false);
 
   const addNewTask = async (task) => {
-    const result = await postTask();
+    setIsPending(true);
+    const result = await postTask(task);
     console.log(result);
-    setTaskList([...taskList, task]);
+    setIsPending(false);
+    // setTaskList([...taskList, task]);
   };
   // Delete the task item from task list
   const handleOnDeleteTaskList = (i) => {
@@ -51,6 +54,16 @@ function App() {
       <div className="wrapper">
         <div className="container">
           <Title />
+          {isPending && (
+            <div className="d-flex justify-content-center color-primary">
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          )}
+
+          <div className="alert alert-success">feedback message here</div>
+
           <Form addNewTask={addNewTask} total={total} />
           <div className="row">
             <TaskList
