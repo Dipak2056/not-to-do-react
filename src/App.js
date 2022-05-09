@@ -11,13 +11,15 @@ function App() {
   const [taskList, setTaskList] = useState([]);
   const [badList, setBadList] = useState([]);
   const [isPending, setIsPending] = useState(false);
+  const [response, setResponse] = useState({});
 
   useEffect(() => {
     const getTask = async () => {
       setIsPending(true);
-
-      const result = await fetchTasks();
+      const { status, result, message } = await fetchTasks();
       setIsPending(false);
+      result === "error" && setResponse({ status, message });
+      result?.length && setTaskList(result);
 
       console.log(result);
     };
@@ -74,7 +76,9 @@ function App() {
             </div>
           )}
 
-          <div className="alert alert-success">feedback message here</div>
+          {response?.message && (
+            <div className="alert alert-success">{response.message}</div>
+          )}
 
           <Form addNewTask={addNewTask} total={total} />
           <div className="row">
