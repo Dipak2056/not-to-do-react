@@ -1,17 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BadList } from "./components/BadList";
 import { Form } from "./components/Form";
 import { TaskList } from "./components/TaskList";
 import { Title } from "./components/Title";
 import { TotalHours } from "./components/TotalHours";
+import { fetchTasks, postTask } from "./helper/axiosHelper";
 
 function App() {
   const [taskList, setTaskList] = useState([]);
   const [badList, setBadList] = useState([]);
+  const [isPending, setIsPending] = useState(false);
+  const [response, setResponse] = useState({});
 
-  const addNewTask = (task) => {
-    setTaskList([...taskList, task]);
+  useEffect(() => {
+    const getTask = async () => {
+      setIsPending(true);
+      const { status, result, message } = await fetchTasks();
+      setIsPending(false);
+      result === "error" && setResponse({ status, message });
+      result?.length && setTaskList(result);
+
+      console.log(result);
+    };
+    getTask();
+  }, []);
+
+  const addNewTask = async (task) => {
+    setIsPending(true);
+    const result = await postTask(task);
+    console.log(result);
+    setIsPending(false);
+    // setTaskList([...taskList, task]);
   };
   // Delete the task item from task list
   const handleOnDeleteTaskList = (i) => {
@@ -48,6 +68,18 @@ function App() {
       <div className="wrapper">
         <div className="container">
           <Title />
+          {isPending && (
+            <div className="d-flex justify-content-center color-primary">
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          )}
+
+          {response?.message && (
+            <div className="alert alert-success">{response.message}</div>
+          )}
+
           <Form addNewTask={addNewTask} total={total} />
           <div className="row">
             <TaskList
